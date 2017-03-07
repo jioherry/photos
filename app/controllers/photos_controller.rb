@@ -8,8 +8,30 @@ class PhotosController < ApplicationController
 		@photo = Photo.new
 	end
 
+	def show
+		@photo = Photo.find(params[:id])
+	end
+
+	def edit
+		@photo = Photo.find(params[:id])
+	end
+
+	def update
+		@photo = Photo.find(params[:id])
+		@photo.update(photo_params)
+
+		redirect_to photos_url(@photo)
+	end
+
+	def destroy
+		@photo = Photo.find(params[:id])
+		@photo.destroy
+
+		redirect_to photos_url
+	end
+
 	def create
- 		@photo = Photo.new(params[:photo])
+ 		@photo = Photo.new(photo_params)
  		@photo.save
 
  		redirect_to photos_url
@@ -21,7 +43,4 @@ class PhotosController < ApplicationController
  		params.require(:photo).permit(:title, :date, :description, :file_location)
 	end
 
-	def show
-		@photo = photo.find(params[:id])
-	end
 end
